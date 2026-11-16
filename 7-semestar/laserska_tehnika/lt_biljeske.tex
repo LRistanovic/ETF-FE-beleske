@@ -318,11 +318,26 @@ Laserski snop se često karakteriše i svojom snagom $P$, pa može biti korisno 
     I(\rho, z) = \frac{2P}{\pi W(z)^2} e^{-\frac{2\rho^2}{W(z)^2}}
 \end{equation*}
 
-Još jedna stvar koja može biti od interesa, nasuprot ukupne snage snopa, je procenat njegove ukupne snage koji se prostire unutar radijusa $\rho_0$ od ose:
-\begin{equation*}
-    \frac{1}{P} \int_0^{\rho_0} I(\rho, z) 2\pi\rho d\rho = 1 - e^{-\frac{2\rho_0^2}{W(z)^2}}
-\end{equation*}
+Druga stvar koja može biti od interesa, nasuprot ukupne snage snopa, je procenat njegove ukupne snage koji se prostire unutar radijusa $\rho_0$ od ose:
+\begin{equation}
+    \frac{1}{P} \int_0^{\rho_0} I(\rho, z) 2\pi\rho d\rho = 1 - e^{-\frac{2\rho_0^2}{W(z)^2}} \label{gs - procenat snage}
+\end{equation}
 Primjera radi, dobija se da se približno 86\% snage prostire unutar $\rho_0 = W(z)$, a 99\% snage unutar $\rho_0 = 1.5W(z)$.
+
+Jedan detalj o kojem je bitno voditi računa kada je u pitanju snaga je uticaj konačne aperture.
+Nama je često od interesa talas u formi Gausovog snopa koji je konfiniran unutar nekog rezonatora.
+Videćemo kasnije da se to postiže postavljanjem ogledala, tako da se talas odbija između jednog i drugog.
+Međutim, kao što nam je poznato, Gausov snop teorijski ima beskonačnu širinu snopa, a nemoguće je napraviti ogledalo beskonačne površine, pa je izvesno da jedan dio upadajućeg snopa neće biti zahvaćen ogledalom i odbijen ka drugom.
+\enquote{Konačna apertura} se ovde odnosi na konačnu dimenziju ovih ogledala.
+
+Na osnovu izraza \eqref{gs - procenat snage}, možemo napisati izraz za snagu koja ne upadne na ogledalo rezonatora:
+\begin{equation*}
+    P_g = P e^{-2\frac{\rho_0^2}{W^2}}
+\end{equation*}
+gdje je $\rho_0$ poluprečnik ogledala.
+Kada je $\rho_0 > W$, ovaj udio je praktično zanemarljiv.
+Međutim, kada je $\rho_0 < W$, preveliki dio snage se ne odbije tako da Gausov snop pri odbijanju ne održava svoju formu ni približno.
+U tom slučaju modovi rezonatora nisu dobro opisani Gaus-Ermitovim snopovima.
 
 \subsection{Poluprečnik snopa}
 Gausov snop nema egzaktan poluprečnik, u smislu radijalnog rastojanja na kom polje opadne na nulu, već od zavisnosti od njega ono opada eksponencijalno.
@@ -508,7 +523,7 @@ Pri prolasku kroz optičke komponente rotaciono simetrične u odnosu na osu po k
 Ono što mu se mijenja jesu struk i širenje snopa.
 
 \subsection{Prolazak Gausovog snopa kroz tanko sočivo}
-Kompleksna transmitansa tankog sočiva žižne daljine $f$ je $t(\rho) = e^{j\frac{k\rho^2}{2f}}$ ($|t| = 1$, odnosno apsorpscija i refleksija su zanemarljive, dolazi samo do promjene faze).
+Kompleksna transmitansa tankog sočiva žižne daljine $f$ je $t(\rho) = e^{j\frac{k\rho^2}{2f}}$ ($|t| = 1$, odnosno apsorpscija i refleksija su zanemarljive, dolazi samo do promjene faze)\footnote{Pogledati dodatak \ref{dodatak - t sociva}}.
 Ako je incidentno električno polje $E$, polje pri izlasku iz sočiva iznosi:
 \begin{equation*}
     E' = E \cdot t = \underbrace{\Psi_0' \frac{W_0}{W(z)} e^{-\frac{\rho^2}{W(z)^2}} e^{-jk\frac{\rho^2}{2R(z)} - j\xi - jkz}}_E \underbrace{e^{j\frac{k\rho^2}{2f}}}_t
@@ -524,10 +539,7 @@ Imamo novu vrijednost $z_0'$, ali možemo da izaberemo novi koordinatni početak
      & \cancel{k}\frac{\cancel{\rho^2}}{\cancel{2}R} - \cancel{k}\frac{\cancel{\rho^2}}{\cancel{2}f} = \cancel{k}\frac{\cancel{\rho^2}}{\cancel{2}R'} \\
      & \frac{1}{R} - \frac{1}{f} = \frac{1}{R'}
 \end{align*}
-Dakle, za snop koji je prošao kroz sočivo poznato nam je $W' = W$ i $R' = \frac{fR}{f - R}$.
-\begin{tbox}
-    Za divergirajući snop je $R > 0$, a za konvergirajući $R < 0$.
-\end{tbox}
+Dakle, za snop koji je prošao kroz sočivo poznato nam je $W' = W$ i $R' = \frac{fR}{f - R}$\footnote{Za divergirajući snop je $R > 0$, a za konvergirajući $R < 0$.}.
 \begin{tbox}
     Za proizvoljan Gausov snop, čija su širina i poluprečnik poznati na nekoj koordinati $z$, moguće je odrediti poluprečnik i rastojanje struka od te tačke:
     \begin{align*}
@@ -547,8 +559,113 @@ Dakle, za snop koji je prošao kroz sočivo poznato nam je $W' = W$ i $R' = \fra
         W_0 = \frac{W}{\sqrt{1 + \left(\frac{\pi W^2}{R \lambda}\right)^2}}
     \end{empheq}
     \begin{align*}
-        z = \frac{\pi^2 W^2}{R \lambda^2} W_0^2 = \frac{\pi^2 W^2}{R \lambda^2} \frac{W^2}{1 + \left(\frac{\pi W^2}{R \lambda}\right)^2}
+        z = \frac{\pi^2 W^2}{R \lambda^2} W_0^2 = \frac{\pi^2 W^2}{R \lambda^2} \frac{W^2}{1 + \left(\frac{\pi W^2}{R \lambda}\right)^2} = R\frac{(\pi W^2)^2}{(R\lambda)^2 + (\pi W^2)^2}
     \end{align*}
+    \begin{empheq}[box=\fbox]{equation*}
+        z = \frac{R}{1 + \left(\frac{R\lambda}{\pi W^2}\right)^2}
+    \end{empheq}
 \end{tbox}
+Poznatu vezu između širine i poluprečnika snopa u nekoj tački i paramatera njegovog struka možemo iskoristiti i za transmitovani Gausov snop:
+\begin{align*}
+     & W_0' = \frac{W'}{\sqrt{1 + \left(\frac{\pi W'^2}{R \lambda}\right)^2}} = \frac{W}{\sqrt{1 + \left(\frac{\pi W^2}{R \lambda}\right)^2}} \\
+     & -z' = \frac{R'}{1 + \left(\frac{R'\lambda}{\pi W^2}\right)^2} \text{ (znak minus je jer se snop nalazi sa druge strane sočiva)}
+\end{align*}
+Ubacivanjem $R' = \frac{fR}{f - R}$ u ove jednačine, nakon dužeg računa (koji ćemo sada izgleda preskočiti) dobijamo veze između parametara novog i starog Gausovog snopa:
+\begin{align*}
+     & W_0' = MW_0                      & \text{novi poluprečnik struka} \\
+     & (z' - f) = M^2 (z - f)           & \text{novi položaj struka}     \\
+     & 2z_0' = M^2 2z_0                 & \text{nova dubina fokusa}      \\
+     & 2\theta_0' = \frac{2\theta_0}{M} & \text{novi ugao divergencije}  \\
+\end{align*}
+gde je $M = \frac{M_r}{\sqrt{1 + r^2}}$ faktor uvećanja, $r = \frac{z_0}{z - f}$, i $M_r = \left|\frac{f}{z - f}\right|$ standardno uvećanje sočiva\footnote{Standardno uvećanje sočiva je $M_r = \frac{y_\text{lika}}{y_\text{predmeta}}$ i važi $\frac{1}{y_\text{predmeta}} + \frac{1}{y_\text{lika}} = \frac{1}{f}$.}.
+
+\subsection{Geometrijska optika kao limit}
+
+Posmatrajmo posebno slučaj $z - f \gg z_0$, odnosno kada je sočivo dovoljno izvan dubine fokusa upadajućeg snopa.
+Poznato nam je da se tada snop ponaša praktično kao sferni talas, sa tačkastim izvorom na mjestu struka, i onda će važiti da je:
+\begin{align*}
+     & r \ll 1                                  \\
+     & M \approx M_r                            \\
+     & \frac{1}{z'} + \frac{1}{z} = \frac{1}{f}
+\end{align*}
+i kao slika se umjesto tačke dobija mrlja dijametra $2W_0$.
+
+Kada se struk snopa približava sočivu, $r$ raste i geometrijska aproksimacija postaje manje opravdana, pa se i uvećanje $M$ smanjuje.
+
+\subsection{Podešavanje profila}
+
+Profil (tj. parametri snopa) se menja prolaskom kroz sočivo, što se može iskoristiti za postizanje željenih parametara.
+Za te potrebe mogu se koristiti klasična ili gradijentna (GRIN engl. \emph{gradient index}) sočiva.
+
+Na primer, ako sočivo postavimo u struk Gausovog snopa ($z = 0$), transmitovani snop je fokusiran u:
+\begin{align*}
+     & W_0' = W_0 \frac{\left|\frac{f}{0-f}\right|}{\sqrt{1 + \left(\frac{z_0}{0 - f}\right)^2}} = \frac{W_0}{\sqrt{1 + \frac{z_0^2}{f^2}}} \\
+     & z' = \frac{f}{1 + \frac{f^2}{z_0^2}}
+\end{align*}
+
+U slučaju kada je dubina fokusa mnogo veća od žižne daljine $2z_0 \gg f$, u ovim izrazima možemo zanemariti odgovarajuće članove u imeniocu i dobijamo:
+\begin{align*}
+     & W_0' \approx \frac{W_0}{z_0} f = \theta_0 f = \frac{\lambda}{\pi W_0} f \\
+     & z' \approx f
+\end{align*}
+Dakle, struk snopa se nalazi u žiži, odnosno snop je fokusiran u žižu, što i očekujemo od ravanskog talasa koji nailazi na sočivo (a Gausov snop je u okolini struka približno ravanski).
+Talasna optika daje da je $W_0'$ direktno proporcionalno sa $\lambda$ i $f$ i obrnuto proporcionalno sa $W_0$.
+U limitu geometrijske optike $\lambda \to 0$ dobija se veličina spota (u suštini tačkasti lik) kao u geometrijskoj optici.
+U mnogim primenama (npr. narezivanje CD-ova, laserska fuzija) želimo minimalnu dimenziju spota, što se dobija biranjem minimalne talasne dužine i što debljeg incidentnog snopa.
+Naravno, uži transmitovani spot će imati veću divergenciju i manju dubinu fokusa od incidentnog.
+
+(SLIKA)
+
+Pomoću sočiva spot se može i širiti, a takođe može se i izvršiti identično ponavljanje profila onoliko puta koliko ima i sočiva.
+
+(SLIKA)
+
+\subsection{Ogledala}
+
+Ravno ogledalo samo menja smer propagacije snopa, dok sferno ogledalo menja smer i profil približno isto kao i sferno sočivo.
+
+\appendix
+
+\chapter{Kompleksna transmitansa tankog sočiva} \label{dodatak - t sociva}
+
+Izvešćemo izraz za kompleksnu transmitansu tankog sočiva $t$ u slučaju kada je jedna površ planarna radi jednostavnosti, ali se izvođenje lako generalizuje.
+U tom slučaju žižna daljina sočiva iznosi:
+\begin{align*}
+    \frac{1}{f} & = (n - 1)\left(\frac{1}{R_1} - \frac{1}{R^2}\right) =  \\
+                & = (n - 1)\left(\frac{1}{R} - \frac{1}{\infty}\right) = \\
+                & = \frac{n - 1}{R} \implies f = \frac{R}{n - 1}
+\end{align*}
+
+Takođe se ograničavamo samo na aksijalno simetrična sočiva (ne obrađujemo eliptična i slično).
+Pretpostavljamo idealnu transmisiju, odnosno da se nijedan dio snage ne reflektuje ili apsorbuje, tako da je  $|t| = 1$.
+Elektromagnetni talas tada doživljava samo fazni pomjeraj, koji zavisi samo od radijalne koordinate $\rho$:
+\begin{equation*}
+    t = e^{jk\Delta OPL}
+\end{equation*}
+gdje je $\Delta OPL$ razlika optičkih dužina puteva zraka koji prolaze kroz osu i paralelno osi na rastojanju $\rho$.
+
+(SLIKA)
+
+Optička dužina puta zraka koji ide kroz osu je $OPL_1 = nd_0$, a pomjerenog zraka je $OPL_2 = (d - \Delta)n + \Delta \cdot 1)$, pa je njihova razlika:
+\begin{align*}
+    \Delta OPL = OPL_1 - OPL_2 & = nd_0 - ((d_0 - \Delta)n + \Delta) = \\
+                               & = nd_0 - nd_0 + n\Delta - \Delta =    \\
+                               & = (n - 1)\Delta
+\end{align*}
+\begin{align*}
+    \Delta & = R - \sqrt{R^2 - \rho^2} =                         \\
+           & = R - R\sqrt{1 - \frac{\rho^2}{R^2}} \approx        \\
+           & \approx R - R\left(1 - \frac{\rho^2}{2R^2}\right) = \\
+           & = \frac{\rho^2}{2R}
+\end{align*}
+gdje smo iskoristili paraksijalnu aproksimaciju u kojoj je pretpostavljeno da su svi zraci blizu optičke ose ($\rho \ll R$).
+Sada je razlika optičkih dužina puteva:
+\begin{align*}
+    \Delta OPL = (n - 1) \frac{\rho^2}{2R} = \frac{\rho^2}{2\underbrace{\frac{R}{n - 1}}_f} = \frac{\rho^2}{2f}
+\end{align*}
+Na kraju to ubacimo u izraz za transmitansu:
+\begin{equation*}
+    t = e^{-jk\frac{\rho^2}{2f}}
+\end{equation*}
 
 \end{document}
