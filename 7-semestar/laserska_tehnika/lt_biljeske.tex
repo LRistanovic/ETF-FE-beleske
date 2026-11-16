@@ -128,10 +128,10 @@ Takođe, dodajmo da generalno laseri imaju male efikasnosti konverzije električ
 Osobine laserskog zračenja, u poređenju sa ostalim izvorima, su usmjerenost, velika iradijansa $\left[\frac{W}{m^2}\right]$ u maloj zapremini prostora i koherentnost (šta god da je to tačno).
 
 
-\chapter{Gausov snop}
+\chapter{Svetlosni snopovi}
 Neki uvod ovdje bro
 
-\section{Paraksijalna Helmholcova jednačina}
+\section{Paraksijalna Helmholcova jednačina i Gausov snop}
 
 Pođimo od Maksvelovih jednačina u dielektriku ili vakuumu:
 \begin{align}
@@ -323,21 +323,6 @@ Druga stvar koja može biti od interesa, nasuprot ukupne snage snopa, je procena
     \frac{1}{P} \int_0^{\rho_0} I(\rho, z) 2\pi\rho d\rho = 1 - e^{-\frac{2\rho_0^2}{W(z)^2}} \label{gs - procenat snage}
 \end{equation}
 Primjera radi, dobija se da se približno 86\% snage prostire unutar $\rho_0 = W(z)$, a 99\% snage unutar $\rho_0 = 1.5W(z)$.
-
-Jedan detalj o kojem je bitno voditi računa kada je u pitanju snaga je uticaj konačne aperture.
-Nama je često od interesa talas u formi Gausovog snopa koji je konfiniran unutar nekog rezonatora.
-Videćemo kasnije da se to postiže postavljanjem ogledala, tako da se talas odbija između jednog i drugog.
-Međutim, kao što nam je poznato, Gausov snop teorijski ima beskonačnu širinu snopa, a nemoguće je napraviti ogledalo beskonačne površine, pa je izvesno da jedan dio upadajućeg snopa neće biti zahvaćen ogledalom i odbijen ka drugom.
-\enquote{Konačna apertura} se ovde odnosi na konačnu dimenziju ovih ogledala.
-
-Na osnovu izraza \eqref{gs - procenat snage}, možemo napisati izraz za snagu koja ne upadne na ogledalo rezonatora:
-\begin{equation*}
-    P_g = P e^{-2\frac{\rho_0^2}{W^2}}
-\end{equation*}
-gdje je $\rho_0$ poluprečnik ogledala.
-Kada je $\rho_0 > W$, ovaj udio je praktično zanemarljiv.
-Međutim, kada je $\rho_0 < W$, preveliki dio snage se ne odbije tako da Gausov snop pri odbijanju ne održava svoju formu ni približno.
-U tom slučaju modovi rezonatora nisu dobro opisani Gaus-Ermitovim snopovima.
 
 \subsection{Poluprečnik snopa}
 Gausov snop nema egzaktan poluprečnik, u smislu radijalnog rastojanja na kom polje opadne na nulu, već od zavisnosti od njega ono opada eksponencijalno.
@@ -623,6 +608,86 @@ Pomoću sočiva spot se može i širiti, a takođe može se i izvršiti identič
 \subsection{Ogledala}
 
 Ravno ogledalo samo menja smer propagacije snopa, dok sferno ogledalo menja smer i profil približno isto kao i sferno sočivo.
+
+\section{ABCD metod}
+
+Razmatrajmo aksijalno simetričan optički sistem sačinjen od prelamajućih i odbijajućih površina (po potrebi sačinjenih od beskonačno tankih delova, ako je sredina nehomogena po $z$ pravcu), pri čemu su sve centrirane oko iste optičke ose.
+Prolazak zraka se može pratiti pomoću 2 parametra: njihove radijalne koordinate i ugla koji zaklapaju sa optičkom osom za neku vrednost $z$.
+Ta dva parametra ćemo posmatrati kao jedinstven vektor za opisivanje zraka $
+    \begin{bmatrix}
+        \rho \\
+        \theta
+    \end{bmatrix}
+$.
+Za paraksijalne zrake veza između izlaznih i ulaznih koordinata će biti približno linearna, tako da se može prikazati pomoću matrice:
+\begin{equation*}
+    \begin{bmatrix} \rho_2 \\ \theta_2 \end{bmatrix} = \begin{bmatrix}
+        A & B \\ C & D
+    \end{bmatrix} \begin{bmatrix} \rho_1 \\ \theta_1 \end{bmatrix}
+\end{equation*}
+Ove matrice se takođe zovu i \emph{matrice transfera zraka}. Evo nekih primera matrica transfera $M$ za pojedine optičke elemente:
+\begin{itemize}
+    \item \underline{prostiranje u homogenoj sredini (uključujući vakuum)}
+
+          (SLIKA)
+          \begin{align*}
+               & \theta \approx \tg\theta = \frac{d\rho}{dz} \implies \rho_2 = \rho_1 + \theta_1 d \\
+               & \theta_2 = \theta_1                                                               \\
+               & \implies M = \begin{bmatrix}
+                                  1 & d \\
+                                  0 & 1
+                              \end{bmatrix}
+          \end{align*}
+
+    \item \underline{prolazak kroz tanko sočivo}
+          \begin{equation*}
+              \rho_2 = \rho_1 \text{ (na tankom sočivu zrak ne menja položaj, samo pravac)}
+          \end{equation*}
+          (SLIKA)
+          Polazeći od jednačine tankog sočiva:
+          \begin{align*}
+               & \frac{1}{p} + \frac{1}{l} = \frac{1}{f} \bigg/ \cdot \rho                                                 \\
+               & \underbrace{\frac{\rho}{p}}_{\tg\theta_1} + \underbrace{\frac{\rho}{l}}_{\tg(-\theta_2)} = \frac{\rho}{f} \\
+          \end{align*}
+          i ako ubacimo da je $\tg\theta \approx \theta$ dobijamo:
+          \begin{align*}
+               & \theta_1 - \theta_2 = \frac{\rho}{f}  \\
+               & \theta_2 = \theta_1 - \frac{1}{f}\rho \\
+               & \implies M = \begin{bmatrix}
+                                  1            & 0 \\
+                                  -\frac{1}{f} & 1
+                              \end{bmatrix}
+          \end{align*}
+    \item \underline{razdvojna površ dva dielektrika}
+          \begin{align*}
+               & \rho_2 = \rho_1                                                                                                        \\
+               & n_1 \sin\theta_1 = n_2\sin\theta_2  \land \sin\theta \approx \theta \implies \theta_2 \approx \theta_1 \frac{n_1}{n_2} \\
+               & \implies M = \begin{bmatrix}
+                                  1 & 0               \\
+                                  0 & \frac{n_1}{n_2}
+                              \end{bmatrix}
+          \end{align*}
+    \item \underline{prelamanje na sfernoj površi}
+          \begin{equation*}
+              \rho_2 = \rho_1
+          \end{equation*}
+          (SLIKA)
+          \begin{align*}
+               & n_1 \sin\theta_i = n_2\sin\theta_t \implies n_1 \theta_i \approx n_2 \theta_t                                              \\
+               & \begin{cases}
+                      & \theta_i = \theta_1 + \phi \text{ (spoljašnji ugao u trouglu)}                                        \\
+                      & \phi = \theta_t + (-\theta_2) \text{ (spoljašnji ugao u trouglu)} \implies \theta_t = \phi + \theta_2 \\
+                 \end{cases}               \\
+               & n_1 (\theta_1 + \phi) = n_2 (\phi + \theta_2)                                                                              \\
+               & n_1 \theta_1 + n_1 \phi = n_2 \phi + n_2 \theta_2                                                                          \\
+               & \phi \approx \tg\phi = \frac{\rho_1}{R} \implies n_1 \theta_1 + n_1 \frac{\rho_1}{R} = n_2 \frac{\rho_1}{R} + n_2 \theta_2 \\
+               & \theta_2 = \frac{1}{n_2} \left(-\frac{n_2 - n_1}{R} \rho_1 + n_1 \theta_1\right)                                           \\
+               & \implies M = \begin{bmatrix}
+                                  1                       & 0               \\
+                                  -\frac{n_2 - n_1}{n_2R} & \frac{n_1}{n_2}
+                              \end{bmatrix}
+          \end{align*}
+\end{itemize}
 
 \appendix
 
