@@ -689,6 +689,152 @@ Ove matrice se takođe zovu i \emph{matrice transfera zraka}. Evo nekih primera 
           \end{align*}
 \end{itemize}
 
+\subsection{ABCD zakon primenjen na Gausov snop}
+
+Za prolazak kroz slobodan prostor (ili drugu homogenu sredinu) važi $q_2 = q_1 + d (q(z) = z  + jz_0)$, ili drugačije napisano:
+\begin{equation*}
+    q_2 = \frac{1 \cdot q_1 + d}{0 \cdot q_1 + 1}
+\end{equation*}
+što je po formi analogno ABCD matrici za slobodan prostor:
+\begin{equation*}
+    M = \begin{bmatrix}
+        1 & d \\
+        0 & 1
+    \end{bmatrix}
+\end{equation*}
+
+Posmatrajmo prolazak Gausovog snopa kroz proizvoljnu tanku komponentu.
+Tada mora važiti da upadni i transmitovani snop na mestu komponente imaju istu širinu, $W_2 = W_1$
+
+(SLIKA)
+\begin{align*}
+     & \frac{1}{q_2} = \frac{1}{R_2} - j\frac{\lambda_2}{\pi W^2}                                                                \\
+     & \begin{cases}
+            & \theta_2 = C \rho + \theta_1                \\
+            & \frac{\rho}{R_2} = C\rho + \frac{\rho}{R_1} \\
+            & \frac{1}{R_2} = C + \frac{1}{R_1}
+       \end{cases}                                                                        \\
+     & \frac{1}{q_2} = C + \frac{1}{R_1} - j\frac{\lambda_1}{\pi W^2}\frac{\lambda_2}{\lambda_1}                                 \\
+     & \frac{1}{q_2} = C + \frac{1}{q_1}\frac{\lambda_2}{\lambda_1} = C + \frac{D}{q_1} \text{ koji vrag se desio u ovom koraku} \\
+     & q_2 = \frac{1 \cdot q_1 + 0}{C \cdot q_1 + D}
+\end{align*}
+Izraz koji smo dobili je isti po formi kao i ABCD matrica za prolazak zraka kroz proizvoljnu tanku komponentu:
+\begin{equation*}
+    M = \begin{bmatrix}
+        1 & 0 \\
+        C & D
+    \end{bmatrix}, D = \frac{\lambda_2}{\lambda_1} = \frac{n_1}{n_2}, C \text{ - zavisi od sistema}
+\end{equation*}
+
+Ove matrice opisuju transmisiju zraka kroz jednu komponentu, pa za sistem $n$ optičkih komponenti možemo pisati $M = M_n M_{n - 1}...M_1$.
+
+Kako se svi paraksijalni sistemi mogu predstaviti kao kombinacija homogenog medijuma i (po potrebi, naprimer za nehomogeni medijum) beskonačno mnogo tankih elemenata, važi da je ABCD zakon primenljiv na $q$ parametar Gausovog snopa \emph{univerzalno}, dok god je na snazi paraksijalna aproksimacija.
+
+\section{Ostali snopovi}
+
+\subsection{Ermite-Gausovi snopovi}
+
+Gausov snop nije jedino rešenje paraksijalne Helmholcove jednačine.
+U praksi su nam takođe zanimljiva i ostala rešenja koja imaju identičan talasni front kao Gausov snop.
+Ovakvi snopovi imaju jedinstvenu osobinu da se mogu prilagoditi sfernim ogledalima velikog poluprečnika, te stoga mogu formirati mod rezonatora koji kroz njega putuje neizmenjen, po ponovljenim optičkim putanjama.
+
+Ako se vratimo na oblik paraksijalne Helmholcove jednačine \eqref{gs - phj} i ne ograničavamo se na idealno simetričan slučaj, tj. dozvolimo da bude $\frac{\partial\Psi}{\partial\phi} \neq 0$, možemo potražiti rešenje jednačine u dekartovom koordinatnom sistemu.
+Označimo prvo sa $\Psi_G$ kompleksnu anvelopu Gausovog snopa:
+\begin{equation*}
+    \Psi_G = \frac{\Psi_1}{q(z)} e^{-\frac{\rho^2}{2q(z)}} = \frac{\Psi_1}{q(z)}e^{-jk\frac{x^2 + y^2}{2q(z)} - jkz}
+\end{equation*}
+Očekujemo da rešenja koja dobijemo u transverzalnoj ravni podsećaju na Gausov snop, sa nekom dodatnom zavisnošću od $x$ i $y$, pa ćemo pokušati da nađemo rešenje u sledećem obliku:
+\begin{equation*}
+    A(x, y, z) = X\left(\sqrt{2}\frac{x}{W(z)}\right) Y\left(\sqrt2\frac{y}{W(z)}\right) \Psi_G e^{jZ(z)}
+\end{equation*}
+gde smo \enquote{razdvojili na slojeve} očekivanu sličnost sa Gausovim snopom, varijacije po $x$ i $y$ pravcu i eventualnu promenu faze propagacije u $z$ pravcu, pri čemu su $X$, $Y$ i $Z$ realne funkcije.
+Ubacimo ovaj oblik u paraksijalnu Helmholcovu jednačinu:
+\begin{align*}
+     & \nabla_T^2A - j2k \frac{\partial A}{\partial z} = 0                                                           \\
+     & \frac{\partial^2 A}{\partial x^2} + \frac{\partial^2 A}{\partial y^2} - j2k \frac{\partial A}{\partial z} = 0
+\end{align*}
+\begin{tbox}
+    \begin{align*}
+         & \frac{\partial A}{\partial x} = \frac{\partial X}{\partial x} Y e^{jZ} \Psi_G + XYe^{jZ}\frac{\partial \Psi_G}{\partial x}                                                                                           \\
+         & \frac{\partial^2 A}{\partial x^2} = \frac{\partial^2 X}{\partial x^2} Y e^{jZ} \Psi_G + 2 \frac{\partial X}{\partial x} Y e^{jZ} \frac{\partial \Psi_G}{\partial x} + XYe^{jZ}\frac{\partial^2 \Psi_G}{\partial x^2} \\
+         & \frac{\partial^2 A}{\partial y^2} = X\frac{\partial^2 Y}{\partial y^2} e^{jZ} \Psi_G + 2 X \frac{\partial Y}{\partial y} e^{jZ} \frac{\partial \Psi_G}{\partial y} + XYe^{jZ}\frac{\partial^2 \Psi_G}{\partial y^2}  \\
+         & \frac{\partial A}{\partial z} = XY je^{jZ} \Psi_G \frac{dZ}{dz} + XY e^{jZ} \frac{\partial \Psi_G}{\partial z}
+    \end{align*}
+    IZVOD PO Z PROMIJENITI NIJE TACNO JER X ZAVISI OD W ZAVISI OD Z??
+\end{tbox}
+\begin{align*}
+     & \frac{\partial^2 X}{\partial x^2} Y e^{jZ} \Psi_G + X \frac{\partial^2 Y}{\partial y^2} e^{jZ} \Psi_G + 2e^{jZ} \left(\frac{dX}{dx} Y \frac{\partial \Psi_G}{\partial x} + X \frac{dY}{dy}\frac{\partial \Psi_G}{\partial y} + kXY\Psi_G\frac{dZ}{dz}\right)      \\
+     & + XYe^{jZ} \underbrace{\cancelto{0}{\left(\frac{\partial^2 \Psi_G}{\partial x^2} + \frac{\partial^2 \Psi_G}{\partial y^2} - 2jk\frac{\partial \Psi_G}{\partial z}\right)}}_{\nabla_T^2\Psi_G - 2jk\frac{\partial\Psi_G}{\partial z} = 0} = 0                      \\
+     & \frac{\partial^2 X}{\partial x^2} Y e^{jZ} \Psi_G + X \frac{\partial^2 Y}{\partial y^2} e^{jZ} \Psi_G + 2e^{jZ} \left(\frac{dX}{dx} Y \frac{\partial \Psi_G}{\partial x} + X \frac{dY}{dy}\frac{\partial \Psi_G}{\partial y} + kXY\Psi_G\frac{dZ}{dz}\right)  = 0 \\
+\end{align*}
+\begin{tbox}
+    OVE IZVODE IZMIJENITI NIJE TAČNO
+    \begin{align*}
+         & \frac{\partial \Psi_G}{\partial y} = \frac{\partial}{\partial y} \left(\Psi_1e^{-\frac{x^2 + y^2}{W^2}} \right) = \Psi_1e^{-\frac{x^2 + y^2}{W^2}}\cdot \frac{-2y}{W^2} = -\frac{2y}{W^2} \Psi_G \\
+    \end{align*}
+\end{tbox}
+\begin{align*}
+     & \frac{\partial^2 X}{\partial x^2} Y e^{jZ} \Psi_G + X \frac{\partial^2 Y}{\partial y^2} e^{jZ} \Psi_G                                                                                                  \\
+     & + 2e^{jZ} \left(\frac{dX}{dx} Y \left(-\frac{2x}{W^2}\right)\Psi_G + X \frac{dY}{dy} \left(-\frac{2y}{W^2}\right)\Psi_G + kXY\Psi_G\frac{dZ}{dz}\right)  = 0 \bigg/ : XY\Psi_G e^{jZ}                  \\
+     & \frac{1}{X} \frac{\partial^2 X}{\partial x^2} + \frac{1}{Y} \frac{\partial^2 Y}{\partial y^2} - \frac{4x}{W^2}\frac{1}{X} \frac{dX}{dx} - \frac{4y}{W^2}\frac{1}{Y}\frac{dY}{dy} + 2k\frac{dZ}{dz} = 0 \\
+\end{align*}
+Uvedimo smene $u = \sqrt2 \frac{x}{W}$ i $v = \sqrt2 \frac{y}{W}$:
+\begin{tbox}
+    \begin{align*}
+         & x = u \frac{W}{\sqrt2}                                                      \\
+         & \frac{dX}{dx} = \frac{dX}{du}\frac{du}{dx} = \frac{dX}{du} \frac{\sqrt2}{W} \\
+         & \frac{d^2X}{dx^2} = \frac{d^2X}{du^2} \frac{2}{W^2}                         \\
+         & y = v \frac{W}{\sqrt2}                                                      \\
+         & \frac{dY}{dy} = \frac{dY}{dv}\frac{dv}{dy} = \frac{dY}{dv} \frac{\sqrt2}{W} \\
+         & \frac{d^2Y}{dy^2} = \frac{d^2Y}{dv^2} \frac{2}{W^2}                         \\
+    \end{align*}
+\end{tbox}
+\begin{align*}
+     & \frac{2}{W^2}\frac{1}{X}\frac{d^2X}{du^2} + \frac{2}{W^2} \frac{1}{Y}\frac{d^2Y}{dv^2} - \frac{4u}{W^2}\frac{W}{\sqrt2}\frac{\sqrt2}{W}\frac{1}{X}\frac{dX}{du} - \frac{4v}{W^2}\frac{W}{\sqrt2}\frac{\sqrt2}{W}\frac{1}{Y}\frac{dY}{dv} + 2k \frac{dZ}{dz} = 0     \\
+     & \frac{2}{W^2}\frac{1}{X}\frac{d^2X}{du^2} - \frac{4u}{W^2}\frac{1}{X}\frac{dX}{du} + \frac{2}{W^2} \frac{1}{Y}\frac{d^2Y}{dv^2} - \frac{4v}{W^2}\frac{1}{Y}\frac{dY}{dv} + 2k \frac{dZ}{dz} = 0 \bigg/ \cdot \frac{W^2}{2}                                          \\
+     & \underbrace{\frac{1}{X}\frac{d^2X}{du^2} - 2u\frac{1}{X}\frac{dX}{du}}_\text{zavisi samo od $u$} + \underbrace{\frac{1}{Y}\frac{d^2Y}{dv^2} - 2v\frac{1}{Y}\frac{dY}{dv}}_\text{zavisi samo od $v$} + \underbrace{kW^2 \frac{dZ}{dz}}_\text{zavisi samo od $z$} = 0 \\
+\end{align*}
+Pošto je leva strana jednačine zbir tri funkcije različitih promenljivih $u$, $v$ i $z$, svaka od tih funkcija mora biti konstantna i zato parcijalnu differencijalnu jednačinu možemo razbiti na tri dela:
+\begin{align*}
+     & \begin{cases}
+            & \frac{1}{X}\frac{d^2X}{du^2} - 2u\frac{1}{X}\frac{dX}{du} = -2\mu_1         \\
+            & \frac{1}{Y}\frac{d^2Y}{dv^2} - 2v\frac{1}{Y}\frac{dY}{dv} = -2\mu_2         \\
+            & k W_0^2 \left(1 + \frac{z^2}{z_0^2}\right) \frac{dZ}{dz} = 2(\mu_1 + \mu_2)
+       \end{cases} \\
+     & \begin{cases}
+            & -\frac{1}{2}\frac{d^2X}{du^2} + u\frac{dX}{du} = \mu_1 X             \\
+            & -\frac{1}{2}\frac{d^2Y}{dv^2} + v\frac{dY}{dv} = \mu_2 Y             \\
+            & z_0 \left(1 + \frac{z^2}{z_0^2}\right) \frac{dZ}{dz} = \mu_1 + \mu_2
+       \end{cases}        \\
+\end{align*}
+pri čemu je $kW_0^2 = \frac{2\pi}{\lambda} W_0^2 = 2z_0$.
+Prva jednačina predstavlja problem sopstvene vrednosti za $\mu_1 = l \in \mathbb{N}_0$, čije su sopstvene funkcije takozvani \emph{Ermitovi polinomi} $X(u) = H_l(u)$, definisani rekurentnom relacijom:
+\begin{align*}
+     & H_0(u) = 1                                  \\
+     & H_1(u) = 2u                                 \\
+     & H_{l + 1}(u) = 2u H_l (u) - 2l H_{l - 1}(u)
+\end{align*}
+Ako slično označimo i $\mu_2 = m$, treća jednačina postaje:
+\begin{equation*}
+    z_0 \left(1 + \frac{z^2}{z_0^2}\right) \frac{dZ}{dz} = m + l
+\end{equation*}
+Integracijom $dZ = (m + l) \frac{d\left(\frac{z}{z_0}\right)}{1 + \left(\frac{z}{z_0}\right)^2}$ dobijamo:
+\begin{equation*}
+    Z(z) = (m + l) \arctg\left(\frac{z}{z_0}\right) = (m + l) \xi(z)
+\end{equation*}
+Dakle ova promena faze varira polako od $-(m + l)\frac{\pi}{2}$ do $(m + l)\frac{\pi}{2}$ za $z \in (-\infty, +\infty)$.
+Kompleksna anvelopa je na kraju:
+\begin{align*}
+    A_{l, m} = A_{0l,m} \frac{W_0}{W(z)} G_l\left(\frac{\sqrt2 x}{W(z)}\right) G_m\left(\frac{\sqrt2 y}{W(z)}\right)e^{-jkz - jk\frac{x^2 + y^2}{2R(z)} + j(l + m + 1)\xi(z)}
+\end{align*}
+gde je $G_l(u) = H_l(u)e^{-\frac{u^2}{2}}$ Ermit-Gausova funkcija reda $l$.
+
+Ermit-Gausovi snopovi\footnote{Jedini kružno simetrični snop iz baze Ermit-Gausovih snopova je $m = 0, l = 0$, odnosno sam Gausov snop.} formiraju kompletan skup rešenja (bazis) paraksijalne Helmholcove jednačine\footnote{Alternativni bazis predstavljaju Lager-Gausovi snopovi.}.
+Bilo koje rešenje može se napisati kao superpozicija bazisnih funkcija.
+Na primer, \enquote{\emph{donut}} snop je superpozicija snopova $m = 1, l = 0$ i $m = 0, l = 1$ istih intenziteta.
+
+
+
 \appendix
 
 \chapter{Kompleksna transmitansa tankog sočiva} \label{dodatak - t sociva}

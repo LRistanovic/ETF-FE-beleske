@@ -1,0 +1,589 @@
+\documentclass[fleqn]{report}
+
+\usepackage[serbian]{babel}
+\usepackage[a4paper]{geometry}
+\usepackage{amsmath}
+\usepackage{csquotes}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\sisetup{ per-mode = symbol }
+
+\usepackage{cancel}
+\usepackage{empheq}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{external}
+\usetikzlibrary{arrows.meta, angles, quotes, patterns, patterns.meta}
+\tikzexternalize
+\tikzset{
+    >=Stealth,
+}
+
+\title{
+    Fizička elektronika gasova i plazme \\
+    \large rešeni zadaci za prvi kolokvijum
+}
+\author{}
+\date{Školska 2026/27. godina}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+    \item Izvesti izraz za Debye-vu dužinu određivanjem potencijala tačkastog naelektrisanja $Q$ u plazmi.
+          Elektroni se raspodeljuju po Bolcmanovoj raspodeli, dok se može smatrati da je koncentracija jona homogena.
+          Smatrati da važi gasna aproksimacija.
+          Pokazati da je broj elektrona unutar Debye-ve sfere veoma veliki.
+
+          \underline{Rešenje}:
+
+          Koncentracija elektrona je po Bolcmanovoj raspodeli data sa:
+          \begin{align*}
+               & n_e = n_0 \exp\left(-\frac{U}{k_B T}\right), \quad U = -eV \\
+               & n_e = n_0 \exp\left(\frac{eV}{k_B T}\right)
+          \end{align*}
+          Kada naelektrisanje nije prisutno, $V = 0$, pa je $n_e = n_0$, a samim tim i $n_i = n_0$ (zbog kvazineutralnosti plazme $n_e = n_i$).
+          Pretpostavljamo da su joni dovoljno inertni tako da i u prisustvu naelektrisanja $Q$ ostanu jednako raspodeljeni, tj. da ostane $n_i = n_0$.
+          Sa poznatim izrazima za raspodele naelektrisanja možemo tražiti potencijal iz Puasonovog zakona:
+          \begin{align*}
+               & \nabla \cdot \vec E = \frac{\rho}{\varepsilon_0} \implies \nabla^2 V = -\frac{\rho}{\varepsilon_0}                                                                                                                   \\
+               & \begin{cases}
+                     \nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2} \\
+                     \rho = n_i e - n_e e
+                 \end{cases}                                                                                                   \\
+               & \nabla^2 V = -\frac{e}{\varepsilon_0} (n_i - n_e) = \frac{e}{\varepsilon_0} \left(n_0\exp\left(\frac{eV}{k_B T}\right) - n_0\right) = \frac{n_0 e}{\varepsilon_0} \left(\exp\left(\frac{eV}{k_B T}\right) - 1\right)
+          \end{align*}
+          U gasnoj aproksimaciji je kinetička energija mnogo veća od potencijalne, tj. $k_B T \gg eV$, a za malo $x$ je $\exp(x) \approx 1 + x$, pa možemo pisati:
+          \[ \nabla^2 V \approx \frac{n_0 e}{\varepsilon_0} \left(1 + \frac{eV}{k_B T} - 1\right) = \frac{n_0 e^2}{\varepsilon_0 k_B T} V \]
+          Ako uvedemo oznaku $\lambda_D = \sqrt{\frac{\varepsilon_0 k_B T}{n_0 e^2}}$:
+          \[ \nabla^2 V = \frac{1}{\lambda_D^2} V \]
+          Ako pretpostavimo sferno simetrično rešenje, tako da je $\frac{\partial V}{\partial \theta} = \frac{\partial V}{\partial \phi} \equiv 0$, onda se laplasijan u sfernom koordinatnom sistemu značajno pojednostavljuje i dobijamo:
+          \[ \frac{1}{r^2} \frac{\partial}{\partial r} \left(r^2 \frac{\partial V}{\partial r}\right) = \frac{1}{\lambda_D^2} V \]
+          Ovu jednačinu rešavamo uvođenjem smene $V(r) = \frac{F(r)}{r}$:
+          \begin{align*}
+               & \frac{\partial V}{\partial r} = \frac{\frac{dF}{dr} \cdot r - F}{r^2} = \frac{1}{r}\frac{dF}{dr} - \frac{F}{r^2}                                  \\
+               & r^2 \frac{\partial V}{\partial r} = r\frac{dF}{dr} - F                                                                                            \\
+               & \frac{\partial}{\partial r} \left(r^2 \frac{\partial V}{\partial r}\right) = \cancel{\frac{dF}{dr}} + r\frac{d^2F}{dr^2} - \cancel{\frac{dF}{dr}} \\
+               & \frac{1}{r^2}\frac{\partial}{\partial r} \left(r^2 \frac{\partial V}{\partial r}\right) = \frac{1}{r}\frac{d^2F}{dr^2}
+          \end{align*}
+          Ubacivanjem ovog izraza u gornju jednačinu dobijamo:
+          \begin{align*}
+               & \frac{1}{\cancel{r}}\frac{d^2F}{dr^2} = \frac{1}{\lambda_D^2} \frac{F(r)}{\cancel{r}}           \\
+               & \implies F(r) = A\exp\left(-\frac{r}{\lambda_D}\right) + B\exp\left(+\frac{r}{\lambda_D}\right)
+          \end{align*}
+          Za veliko rastojanje, očekujemo da uronjeno naelektrisanje nema nikakav efekat, dakle da se potencijal spusti na 0:
+          \[ F(r \to \infty) \to 0 \implies B = 0 \]
+          Slično, za dovoljno malo rastojanje od tačkastog naelektrisanja, elektroni koji su privučeni ne menjaju značajno oblik polja, pa očekujemo da za malo $r$ bude:
+          \begin{align*}
+               & V(r \to 0) \to \frac{Q}{4\pi\varepsilon_0 r} \implies F(r \to 0) \to \frac{Q}{4\pi\varepsilon_0} = A \\
+               & \implies V = \frac{Q}{4\pi\varepsilon_0 r} \exp\left(-\frac{r}{\lambda_D}\right)
+          \end{align*}
+
+          \noindent\hfill
+          \begin{tikzpicture}
+              \begin{axis}[
+                      axis lines=middle,
+                      xmin=-0.1, xmax=5,
+                      ymin=-0.1, ymax=5,
+                      xlabel={$r$},
+                      ylabel={$V$},
+                      xtick={1},
+                      xticklabels={$\lambda_D$},
+                      ytick=\empty,
+                  ]
+                  \addplot[
+                      domain=0.2:5,
+                      samples=200,
+                      thick,
+                  ]{exp(-x)/x};
+                  \addplot[
+                      domain=0.2:4.5,
+                      samples=200,
+                      thick,
+                      dotted,
+                  ]{1/x}node[pos=0.5, above right] {$\sim\frac{1}{r}$};;
+              \end{axis}
+          \end{tikzpicture}
+          \hfill\null\\
+          Na osnovu grafika se vidi da se na rastojanju većem od $\lambda_D$ uronjeno naelektrisanje praktično ne vidi.
+
+          Ostalo je još da pokažemo da je broj elektrona u Debye-voj sferi veliki, odnoso da pokažemo da važi $n_0 \lambda_D^3 \gg 1$.
+          Krenimo od gasne aproksimacije, koja kaže da je kinetička energija čestica mnogo veća od potencijalne:
+          \begin{align*}
+               & \frac{3}{2}k_B T_e \gg \frac{e^2}{4\pi\varepsilon_0 \overline{d}} \text{ ($\overline{d}$ je srednje rastojanje između čestica)}                 \\
+               & k_B T_e \gg \frac{e^2}{\varepsilon_0 \overline{d}}                                                                                              \\
+               & \frac{\varepsilon_0 k_B T_e \overline{d}}{e^2} \gg 1                                                                                            \\
+               & n_0 \approx \frac{1}{\overline{d}^3} \implies \overline{d} \approx n_0^{-\frac{1}{3}}                                                           \\
+               & \frac{\varepsilon_0 k_B T_e}{e^2 n_0^{-\frac{1}{3}}} = \underbrace{\frac{\varepsilon_0 k_B T_e}{n_0 e^2}}_{\lambda_D^2} n_0^{\frac{2}{3}} \gg 1 \\
+               & \lambda_D^2 n_0^{\frac{2}{3}} \gg 1 \bigg/ ^{\frac{3}{2}}                                                                                       \\
+               & \lambda_D^3 n_0 \gg 1
+          \end{align*}
+          \hrulefill
+    \item Odrediti i skicirati strujno-naponsku karakteristiku Langmuir-ove sonde uronjene u plazmu.
+          Objasniti na koji način se na osnovu strujno-naponske karakteristike mogu odrediti temperatura i koncentracija elektrona.
+
+          \underline{Rešenje}:
+
+          \emph{
+              Langmuir-ova sonda je instrument za merenje parametara plazme.
+              U suštini predstavlja provodni objekat kome možemo podešavati potencijal i uroniti ga u plazmu.
+              Elektroni koji padaju na provodnu površ čine struju kroz sondu koju možemo meriti.
+              Posmatranjem zavisnosti izmerene struje od potencijala $I(V)$ možemo zaključiti o kojim se vrednostima parametara radi.
+          }
+
+          Označimo sa $V$ potencijal sonde, $V_p$ potencijal plazme u okolini sonde, i $V_s$ razliku tih potencijala $V_s = V - V_p$.
+
+          Posmatramo prvo slučaj kada je $V_s$ negativno.
+          Tada struju čine elektroni samo elektroni koji imaju dovoljno veliku energiju da preskoče potencijalnu barijeru koja se formira između sonde i plazme:
+          \[ \frac{m_e v_z^2}{2} > |eV_s| \implies v_z > \sqrt{\frac{2|eV_s|}{m_e}} \quad \left(\implies p_z > \sqrt{2m_e|eV_s|} = p_{z1}\right) \]
+          $v_z$ je brzina elektrona u pravcu normalnom na površ sonde.
+          Gustina struje tih elektrona je:
+          \[ \vec{J} = ne\left<\vec{v}\right> \]
+          pa je ukupna struja:
+          \[ I = \int \vec{J} d\vec{S} = \vec{J} \vec{S} = e n_e S \left<v_z\right> \]
+          gde je S uronjena površina sonde.
+          \begin{align*}
+              \left<v_z\right> & = \int v_z f_1(\vec{r}, \vec{p}) d\vec{r} d\vec{p} =                \\
+                               & = \int \frac{p_z}{m} f_M(\vec{p}) d\vec{p}                          \\
+              f_M(\vec{p})     & = (2 \pi k_B T_e m_e)^{-\frac{3}{2}} e^{-\frac{p^2}{2 m_e k_B T_e}}
+          \end{align*}
+          \begin{align*}
+              I_e & = e n_e S \int_{p_x = -\infty}^{+\infty} \int_{p_y = -\infty}^{+\infty}\int_{p_z = p_{z1}}^{+\infty} \frac{p_z}{m_e} (2 \pi k_B T_e m_e)^{-\frac{3}{2}} e^{-\frac{p_x^2 + p_y^2 + p_z^2}{2m_e k_B T}} dp_x dp_y dp_z =                                              \\
+                  & = \frac{e n_e S}{m_e} (2 \pi k_B T_e m_e)^{-\frac{3}{2}} {\underbrace{\left(\int_{-\infty}^{+\infty} e^{-\frac{p_x^2}{2m_e k_B T_e}} dp_x\right)}_{\sqrt{2\pi m_e k_B T_e}\footnotemark}}^2 \cdot \int_{p_{z1}}^{+\infty} p_z e^{-\frac{p_z^2}{2m_e k_B T_e}}dp_z = \\
+                  & = \frac{e n_e S}{m_e} (2 \pi k_B T_e m_e)^{-\frac{1}{2}} \int_{p_{z1}}^{+\infty} p_z e^{-\frac{p_z^2}{2m_e k_B T_e}}dp_z = \bigg/ \begin{matrix}
+                                                                                                                                                          u = -\frac{p_z^2}{2 m_e k_B T_e} \\
+                                                                                                                                                          du = -\frac{\cancel 2 p_z dp_z}{\cancel 2 m_e k_B T_e}
+                                                                                                                                                      \end{matrix} \bigg/                                                                         \\
+                  & = \frac{e n_e S}{\cancel{m_e}} (2 \pi k_B T_e m_e)^{-\frac{1}{2}} (-\cancel{m_e} k_B T_e) \int_{u_1}^{-\infty} e^u du =                                                                                                                                             \\
+                  & = e n_e S \frac{1}{\sqrt{2 \pi k_B T_e m_e}} k_B T_e \left. e^u \right|_{-\infty}^{u_1} =                                                                                                                                                                           \\
+                  & = e n_e S \underbrace{\sqrt{\frac{k_B T_e}{2 \pi m_e}}}_{\frac{\overline{v}}{4}\footnotemark} e^{u_1} =                                                                                                                                                             \\
+                  & = \underbrace{e n_e S \frac{\overline{v}}{4}}_{I_{es}} e^{-\frac{|eV_s|}{k_B T}} =                                                                                                                                                                                  \\
+              I_e & = I_{es} \exp\left(\frac{e(V - V_p)}{k_B T}\right)
+          \end{align*}
+          \footnotetext{$\int_{-\infty}^{+\infty} e^{-\alpha x^2} dx = \sqrt{\frac{\pi}{\alpha}}$}
+          \footnotetext{$\overline{v} = \sqrt{\frac{8 k_B T_e}{\pi m_e}}$}
+          Ako se ova strujno naponska karakteristika logaritmuje, dobija se linearna zavisnost:
+          \[ \ln I_e = \ln I_{es} + \frac{eV}{k_B T_e} - \frac{e V_p}{k_B T_e} \]
+          Posmatranjem nagiba ove karakteristike može se zaključiti temperatura elektrona u plazmi, a posmatranjem slobodnog člana, ako je $V_p$ poznato, može se doći do struje zasićenja $I_{es}$, a odatle i koncentracije elektrona.
+
+          Za pozitivne vrednosti $V_s$ sonda privlači elektrone, tako da će jako brzo potrošiti sve elektrone na raspolaganju u svojoj brzini, pa će struja kroz nju biti ograničena brzinom generisanja ili dovođenja novih elektrona.
+          Na grafiku se ovaj efekat vidi kao zasićenje krive za vrednosti $V > V_p$, dok se u okolini $V = V_p$ javlja koleno, pa se iz pozicije kolena može odrediti i $V_p$.
+
+          \noindent\hfill
+          \begin{tikzpicture}
+              \begin{axis}[
+                      axis lines=middle,
+                      xmin=-5, xmax=5,
+                      ymin=-2, ymax=5,
+                      xlabel={$V$},
+                      ylabel={$I_e$},
+                      xtick={2},
+                      xticklabels={$V_p$},
+                      ytick={2.216},
+                      yticklabels={$I_{es}$},
+                  ]
+                  \addplot[
+                      domain=-5:2,
+                      samples=200,
+                      thick,
+                  ]{0.3*exp(x)};
+                  \addplot[
+                      domain=2:5,
+                      samples=200,
+                      thick,
+                  ]{0.3*sqrt(x-1.99) + 2.1867};
+                  \draw[dotted] (2,0)--(2,2.216);
+                  \draw[dotted] (0,2.216)--(2,2.216);
+              \end{axis}
+          \end{tikzpicture}
+          \hfill\null\\
+
+          \hrulefill
+    \item Posmatrajmo dve beskonačne ravni na rastojanju $2d$ i potencijalu $V = 0$.
+          Prostor je popunjen naelektrisanjima $q$ koncentracije $n$.
+          Izračunati potencijal između dve ravni.
+          Pokazati da je za $d \gg \lambda_D$ energija potrebna za transport čestica od jedne ravni do sredine veća ili jednaka od srednje kinetičke energije $\left<E_k\right> = \frac{k_B T}{2}$
+
+          \underline{Rešenje}:
+
+          \noindent\hfill
+          \begin{tikzpicture}
+              \begin{axis}[
+                      axis lines=middle,
+                      clip mode=individual,
+                      xlabel={$x$},
+                      xmin=-3, xmax=3,
+                      ymin=-3, ymax=3,
+                      xtick={-2, 0, 2},
+                      xticklabels={$-d$, $0$, $d$},
+                      ytick=\empty,
+                      axis y line=none
+                  ]
+                  \draw[thick] (axis cs:-2,-2) -- (axis cs:-2,2);
+                  \draw[thick] (axis cs:2,-2) -- (axis cs:2,2);
+                  \fill[pattern=dots] (axis cs: -2, -2) rectangle (axis cs: 2, 2);
+              \end{axis}
+          \end{tikzpicture}
+          \hfill\null\\
+          Zavisnost potencijala tražimo iz Puasonovog zakona:
+          \begin{align*}
+               & \nabla^2 V = -\frac{\rho}{\varepsilon_0} \implies \frac{d^2 V}{dx^2} = -\frac{qn}{\varepsilon_0} \\
+               & \frac{dV}{dx} = -\frac{qn}{\varepsilon_0}x + C_1                                                 \\
+               & V(x) = - \frac{qn}{2\varepsilon_0} x^2 + C_1 x + C_2                                             \\
+               & V(x = -d) = V(x = +d) = 0                                                                        \\
+               & \begin{rcases}
+                     -\frac{qn}{2\varepsilon_0}d^2 - C_1 d + C_2 = 0 \\
+                     -\frac{qn}{2\varepsilon_0}d^2 + C_1 d + C_2 = 0
+                 \end{rcases} \implies C_1 = 0, C_2 = \frac{qnd^2}{2\varepsilon_0}                                \\
+               & \implies V(x) = \frac{qn}{2\varepsilon_0}(d^2 - x^2)
+          \end{align*}
+
+          Energija koja je potrebna za transport je poporcionalna razlici potencijala:
+          \[ E = q\Delta V = q(V(0) - V(d)) = \frac{q^2nd^2}{2\varepsilon_0} \]
+          Ako je $d \gg \lambda_D$ onda je i:
+          \[ E \gg \frac{q^2n\lambda_D^2}{2\varepsilon_0} = \frac{\cancel{q^2n}}{2\cancel{\varepsilon_0}} \frac{\cancel{\varepsilon_0} k_B T}{\cancel{q^2n}} = \frac{k_B T}{2} \]
+
+          \hrulefill
+    \item U TFTR u Prinstonu je zagrejana plazma pomoću ubacivanja neutralnih deuterijumovih atoma $^2_1D$ energije $200\si{\kilo\electronvolt}$.
+          Posle ulaska u magnetno polje konvertuju se u $^2_1D^+$ jone.
+          Ovi joni mogu da se konfiniraju samo ako je Larmorov poluprečnik $R_L < 0.6\si{\meter}$.
+          Izračunati $R_L$ za magnetsku indukciju $B=5\si{\tesla}$ i proveriti da li dolazi do konfinacije jona.
+
+          \underline{Rešenje}:
+
+          Larmorov poluprečnik je dat sa:
+          \[ R_L = \frac{v_\perp}{\omega_c} \]
+          gde je $\omega_c = \frac{eB}{m}$ ciklotronska frekvencija.
+          Proverimo konfinaciju za čestice u najnepovoljnijoj situaciji --- one kod kojih je kompletan vektor brzine normalan na pravac magnetnog polja (imaju najveće $v_\perp$ a samim tim i $R_L$):
+          \[ v_\perp = v = \sqrt{\frac{2E_k}{m}} \]
+          Dobijamo da je Larmorov poluprečnik u najgorem slučaju:
+          \[ R_L = \frac{v_\perp}{\omega_c} = \frac{mv}{eB} = \frac{m}{eB}\sqrt{\frac{2E_k}{m}} = 1.8\si{\centi\meter} \]
+          što je mnogo manje od zahtevanih $0.6\si{\meter}$, pa zaključujemo da će do konfinacije jona doći.
+
+          \hrulefill
+    \item Neneutralni snop elektrona ima gustinu $n_e = 10^{14}\si{\meter^{-3}}$ i poluprečnik $a = 1\si{\centi\meter}$.
+          Snop se kreće duž magnetskog polja indukcije $B = 2\si{\tesla}$.
+          Izračunati intenzitet i smer drifta.
+
+          \underline{Rešenje}:
+
+          \noindent\hfill
+          \begin{tikzpicture}
+              \draw[->] (-4, 0) -- (4, 0) node[right] {$\vec B = B_0 \vec{e}_z$};
+              \draw (-3, -2) -- (3, -2);
+              \draw (-3, 2) -- (3, 2);
+              \draw[->] (3.1, 0) -- (3.1, 2) node[right, pos=0.5] {$a$};
+              \draw (-0.5, -1) rectangle (0.5, 1);
+              \draw[<->] (-0.5, -1.1) -- (0.5, -1.1) node[below, pos=0.5] {$\Delta z$};
+              \draw[->] (0.6, 0) -- (0.6, 1) node[right, pos=0.5] {$r$};
+              \draw[->] (0, 0.5) -- (0, 1.5) node[right, pos=0.8] {$\vec{E}$};
+              \fill[pattern={Dots[distance=6pt, radius=0.3pt]}] (-3,-2) rectangle (3, 2);
+          \end{tikzpicture}
+          \hfill\null\\
+
+          Jedini drift koji je prisutan je $E \times B$ drift, gde je brzina drifta data sa:
+          \[ \vec v = \frac{\vec E \times \vec B}{B^2} \]
+          Vektor $\vec B$ je već poznat, pa je potrebno samo odrediti izraz za vektor električnog polja $\vec E$.
+          Pošto je raspodela naelektrisanja data, to možemo naći pomoću Gausovog zakona (posmatramo cilindričnu površ unutar snopa visine $\Delta z$ i poluprečnika $r$):
+          \begin{align*}
+               & \int_S \vec{E}\cdot d\vec{S} = \frac{1}{\varepsilon_0} \int_V \rho dV                                                          \\
+               & E \cdot 2 \cancel{\pi} \cancel r \cancel{\Delta z} = -\frac{e n_e r^{\cancel 2} \cancel{\pi} \cancel{\Delta z}}{\varepsilon_0} \\
+               & E = - \frac{en_e}{2\varepsilon_e}r                                                                                             \\
+               & \vec{E} = -\frac{e n_e}{2\varepsilon_0} r \vec{e}_r
+          \end{align*}
+          Sada možemo odrediti i brzinu drifta:
+          \[ \vec{v} = \frac{\vec{E}\times\vec{B}}{B^2} = \frac{|\vec{E}|}{B_0} \underbrace{(\vec{e}_r \times \vec{e}_z)}_{-\vec{e}_\phi} = \frac{e n_e r}{2\varepsilon_0 B_0} \vec{e}_\phi \]
+          Maksimalna vrednost brzine se dostiže na ivicama snopa:
+          \[ v_{max} = v(r = a) = \frac{e n_e a}{2 \varepsilon_0 B_0} = 4517\si{\kilo\meter\per\second} \]
+          Možemo da uočimo da elektroni u snopu driftuju \enquote{spiralno}, pa se radi o takozvanom Brillouin-ovom driftu.
+
+          \hrulefill
+    \item Data je cilindrična radijalno simetrična plazmena struktura koja se nalazi u homogenom i stacionarnom magnetskom polju $\vec{B} = B \vec{e}_z$.
+          Neka je gustina elektrona $n(r) = n_0 \exp\left(-\frac{r^2}{r_0^2}\right)$.
+          Pokazati da su brzine drifta usled ukrštenog električnog i magnetskog polja $v_E$ i dijamagnetski drift $v_D$ jednaki i suprotnog smera.
+
+          \underline{Rešenje}:
+
+          Odredimo prvo $v_E$.
+          Za razliku od prethodnog zadatka, ovde se ne podrazumeva da su prisutni isključivo elektroni, već u ovoj plazmi mogu biti prisutni i joni, a njihova raspodela nam nije poznata.
+          Zato električno polje moramo naći na drugačiji način --- prvo ćemo odrediti potencijal.
+          Ako pretpostavimo da su elektroni u plazmi u termodinamičkoj ravnoteži, možemo pisati da zadovoljavaju Bolcmanovu raspodelu:
+          \begin{align*}
+               & n = n_0 \exp\left(-\frac{r^2}{r_0^2}\right) = n_0 \exp(-\frac{U}{k_B T}) = n_0 \exp(\frac{eV}{k_B T})                                              \\
+               & -\frac{r^2}{r_0^2} = \frac{eV}{k_B T}                                                                                                              \\
+               & V = -\frac{k_B T}{e}\frac{r^2}{r_0^2}                                                                                                              \\
+               & \vec E = -\nabla V = -\frac{\partial V}{\partial r} \vec{e}_r = \frac{k_B T}{e} \frac{2r}{r_0^2} \vec{e}_r                                         \\
+               & \vec{v}_E = \frac{\vec{E}\times\vec{B}}{B^2} = \frac{k_B T 2r}{e B_0 r_0^2} \vec{e}_r \times \vec{e}_z = -\frac{2k_B T r}{e B_0 r_0^2}\vec{e}_\phi \\
+          \end{align*}
+          Sada ćemo odrediti $v_D$, pri čemu ćemo se ponovo pozvati na pretpostavku da je plazma u TDR i reći da je temperatura konstantna:
+          \begin{align*}
+              \vec{v}_D & = \frac{\vec{B} \times \nabla p}{qnB_0^2} =                                              \\
+                        & = \frac{\cancel{B_0} \vec{e}_z \times \nabla (n k_B T)}{-e n B_0^{\cancel 2}} =          \\
+                        & = -\frac{k_B T}{e n B_0} \vec{e}_z \times \nabla n =                                     \\
+                        & = -\frac{k_B T}{e n B_0} \vec{e}_z \times \left(\frac{dn}{dr} \vec{e}_r\right) =         \\
+                        & = -\frac{k_B T}{e \cancel n B_0} \cancel n \left(-\frac{2r}{r_0^2}\right) \vec{e}_\phi = \\
+                        & = \frac{2 k_B T r}{e B_0 r_0^2} \vec{e}_\phi = -\vec{v}_E
+          \end{align*}
+
+          \hrulefill
+    \item Uniformna plazma se nalazi u toroidalnoj komori kvadratnog poprečnog preseka.
+          Magnetsko polje je generisano usled struje $I$ duž ose simetrije.
+          Dimenzije su $a = 1\si{\centi\meter}$ i $R = 10\si{\centi\meter}$.
+          Raspodela u plazmi je Maksvelova $k_B T = 100\si{\electronvolt}$ i ima koncentraciju $n = 10^{19}\si{\meter^{-3}}$.
+          Nema električnog polja.
+          Izračunati brzinu akumulacije (fluks) naelektrisanih čestica na gornju površinu komore usled $v_{\nabla B}$ i $v_R$ drifta.
+          Magnetsko polje u centru komore je jednako $1\si{\tesla}$.
+
+          \underline{Rešenje}:
+
+          Ako je $\partial q$ ukupno naelektrisanje koje padne na gornju površ u vremenskom intervalu $\partial t$, fluks naelektrisanja je:
+          \[ \frac{\partial q}{\partial t} = \int \vec{J}d\vec{S} = envS \]
+          gde je $S = 2R\pi a$ i $v$ ukupna brzina drifta (usled gradijenta magnetskog polja i usled zakrivljenosti njegovih linija).
+          Prvo, potrebni izraz za magnetsko polje dobijamo iz Amperovog zakona:
+          \begin{align*}
+               & \oint \vec{B} d\vec{l} = \mu_0 I                                                                  \\
+               & B \cdot 2r\pi = \mu_0 I                                                                           \\
+               & B = \frac{\mu_0 I}{2\pi r} \vec{e}_\phi                                                           \\
+               & \nabla B = \frac{dB}{dr} \vec{e}_r = -\frac{\mu_0 I}{2\pi r^2} \vec{e}_r = -\frac{B}{r} \vec{e}_r
+          \end{align*}
+          Sada odredimo drift usled gradijenta magnetskog polja:
+          \begin{align*}
+              \vec{v}_{\nabla B} & = \frac{R_L v_\perp}{2B^2} \vec{B} \times \nabla B; \quad R_L = \frac{v_\perp}{\omega_c} = \frac{m v_\perp}{qB}        \\
+              \vec{v}_{\nabla B} & = \frac{m v_\perp}{qB} \frac{v_\perp}{2\cancel{B^2}} (\cancel{B} \vec{e}_\phi)\times(-\frac{\cancel{B}}{r}\vec{e}_r) = \\
+                                 & = \frac{\frac{m v_\perp^2}{2}}{qBr} (-\vec{e}_\phi \times \vec{e}_r) =                                                 \\
+                                 & = \frac{E_\perp}{qBr} \vec{e}_z =                                                                                      \\
+                                 & = \frac{k_B T}{qBR} \vec{e}_z \footnotemark
+          \end{align*}
+          \footnotetext{$\left<E\right> = \frac{3}{2} k_B T = \frac{p^2}{2m} = \frac{p_x^2}{2m} + \frac{p_y^2}{2m} + \frac{p_z^2}{2m} \implies \frac{p_x^2}{2m} = \frac{p_y^2}{2m} = \frac{p_z^2}{2m} = \frac{k_B T}{2} \implies E_\parallel = \frac{k_B T}{2}, E_\perp = k_B T$}
+          Odredimo i brzinu drifta usled zakrivljenosti linija magnetskog polja.
+          Taj drift možemo da posmatramo kao uopštenje $\vec{E} \times \vec{B}$ drifta, u kom umesto elektrostatiče sile na česticu deluje neka proizvoljna, koja može biti i centrifugalna kada centar vođenja skreće po zakrivljenim linijama polja:
+          \begin{align*}
+               & \vec{v}_{EB} = \frac{\vec{E}\times\vec{B}}{B^2} \rightarrow \vec{v} = \frac{1}{q}\frac{\vec{F}\times\vec{B}}{B^2}                                                                                  \\
+               & \vec{F} = \vec{F}_{cf} = -m\vec{a}_n = -m(-\frac{v_\parallel^2}{R}\vec{e}_r) = \frac{mv_\parallel^2}{R}\vec{e}_r = \frac{2E_\parallel}{R}\vec{e}_r = \frac{k_B T}{R} \vec{e}_r                     \\
+               & \vec{v}_R = \frac{1}{q} \frac{\left(\frac{k_B T}{R}\vec{e}_r\right) \times(\cancel{B}\vec{e}_\phi)}{B^{\cancel 2}} = \frac{k_B T}{qBR} \vec{e}_r \times \vec{e}_\phi = \frac{k_B T}{qBR} \vec{e}_z
+          \end{align*}
+          Ukupna brzina drifta je:
+          \begin{align*}
+               & \vec{v}_{tot} = \vec{v}_{\nabla B} + \vec{v}_R = \frac{2 k_B T}{qBR} \vec{e}_z                                                                                         \\
+               & \frac{\partial q}{\partial t} = \cancel{e} n \frac{2 k_B T}{\cancel{q} \cancel{R} B} \cdot 2 \cancel{R} \pi a = \frac{4 k_B T n \pi a}{B} = 20\si{\coulomb\per\second}
+          \end{align*}
+          \hrulefill
+    \item Proton energije $1\si{\kilo\electronvolt}$ i $v_\parallel = 0$ u homogenom magnetnom polju $B_0 = 0.1\si{\tesla}$ se ubrzava tako što se magnetsko polje lagano povećava na $1\si{\tesla}$.
+          Zatim se proton elastično sudara sa teškom česticom i promeni pravac kretanja tako da je $v_\parallel' = v_\perp'$.
+          Zatim se polje lagano smanji na $B_0 = 0.1\si{\tesla}$.
+          Kolika je sada energija protona?
+
+          \underline{Rešenje}:
+
+          U vremenski promenljivom magnetnom polju naelektrisana čestica zadržava svoj početni magnetni moment:
+          \begin{align*}
+              \mu = \frac{E_\perp}{B} = const                                                     \\
+              \frac{E_{\perp 0}}{B_0} = \frac{E_\perp}{B} \quad & E_{\parallel 0} = E_\parallel & \\
+              E_{\perp} = E_{\perp 0}\frac{B}{B_0}       \quad  & E_\parallel = 0               &
+          \end{align*}
+          Tokom elastičnog sudara važi zakon održanja energije:
+          \begin{align*}
+               & E = E'                                                                                                         \\
+               & E_\perp = E_\perp' + E_\parallel' = 2E_\perp' \quad (v_\parallel' = v_\perp' \implies E_\parallel' = E_\perp') \\
+               & E_\perp' = \frac{E_\perp}{2} = \frac{E_{\perp 0}}{2}\frac{B}{B_0}                                              \\
+               & E_\parallel' = \frac{E_\perp}{2} = \frac{E_{\perp 0}}{2}\frac{B}{B_0}
+          \end{align*}
+          Nakon toga ponovo imamo vremenski promenljivo polje, pa zbog održanja magnetnog momenta ponovo dolazi do promene normalne energije (dok paralelna ostaje ista):
+          \begin{align*}
+              \frac{E_\perp'}{B} = \frac{E_{\perp}''}{B_0} \quad                                    & E_\parallel' = E_\parallel''                       \\
+              E_\perp'' = E_\perp' \frac{B_0}{B}                            \quad                   & E_\parallel'' = \frac{E_{\perp 0}}{2}\frac{B}{B_0} \\
+              E_\perp'' = \frac{E_{\perp 0}}{2} \cancel{\frac{B}{B_0}} \cancel{\frac{B_0}{B}} \quad &
+          \end{align*}
+          \[ E_f = E_\perp'' + E_\parallel'' = \frac{E_{\perp 0}}{2} \left(1 + \frac{B}{B_0}\right) = 5.5\si{\kilo\electronvolt} \]
+
+          \hrulefill
+    \item Dokazati da je u nehomogenom i stacionarnom magnetskom polju magnetski moment čestice konstantan.
+
+          \underline{Rešenje}:
+
+          Pretpostavljamo da se magnetno polje menja sporo i primarno u $z$ pravcu.
+          Međutim, zbog zakona o održanju magnetskog fluksa zaključujemo da mora postojati i promena u radijalnom pravcu:
+          \[ \nabla \vec{B} = 0 \implies \frac{1}{r}\frac{\partial(rB_r)}{\partial r} + \frac{1}{r}\frac{\partial B_\phi}{\partial\phi} + \frac{\partial B_z}{\partial z} = 0 \]
+          Ako pretpostavimo da ne postoji azimutalna komponenta polja ($B_\phi = 0$):
+          \begin{align*}
+               & \frac{\partial B_z}{\partial z} = -\frac{1}{r}\frac{\partial (rB_r)}{\partial r} \\
+               & rB_r = -\int r\frac{\partial B_z}{\partial z}dr
+          \end{align*}
+          Ako je promjena polja u $z$ pravcu dovoljno spora, u intervalu od interesa možemo smatrati da je $\frac{\partial B_z}{\partial z} \approx const$:
+          \begin{align*}
+               & rB_r \approx -\frac{\partial B_z}{\partial z} \int rdr = -\frac{r^2}{2} \frac{\partial B_z}{\partial z} \\
+               & \implies B_r = -\frac{r}{2}\frac{\partial B_z}{\partial z}; B_z \gg B_r
+          \end{align*}
+          Od interesa nam je da analiziramo koji efekat nehomogeno magnetsko polje ima na naelektrisanu česticu.
+          Sa poznatim njegovim vektorom sada možemo odrediti silu kojom ono deluje na česticu:
+          \begin{align*}
+               & \vec F = q \vec v \times \vec B = q \begin{vmatrix}
+                                                         \vec e_r & \vec e_\phi & \vec e_z \\
+                                                         v_r      & v_\phi      & v_z      \\
+                                                         B_r      & 0           & B_z
+                                                     \end{vmatrix} \\
+               & F_r = q(v_\phi B_z - v_z \cdot 0)                                         \\
+               & F_\phi = q(v_z B_r - v_r B_z)                                             \\
+               & F_z = q(v_r \cdot 0 - B_r v_\phi)
+          \end{align*}
+          Već je poznato da članovi $q v_\phi B_z$ i $-qv_rB_z$ definišu Larmorovo kružno kretanje čestice oko centra vođenja.
+          Analizirajmo efekat preostalih članova:
+          \[ F_z = -qv_\phi B_r = \frac{qr}{2}v_\phi \frac{\partial B_z}{\partial z} \]
+          Od interesa nam je da posmatramo usrednjeni efekat na sve čestice:
+          \[ \left<F_z\right> = \frac{q}{2}\frac{\partial B_z}{\partial z} \left<rv_\phi\right> \]
+          Član $\left<rv_\phi\right>$ je definisan Lormorovim kretanjem:
+          \begin{align*}
+               & \left<rv_\phi\right> = \mp R_L v_\perp \quad \text{(pozitivne čestice skreću u negativnom pravcu, i obratno)}                                                                  \\
+               & \left<rv_\phi\right> = \mp \frac{v_\perp}{\omega_c}\cdot v_\perp = \mp \frac{m v_\perp^2}{|q|B} \cdot \frac{2}{2} = \mp \frac{2}{|q|}\frac{E_\perp}{B} = \mp \frac{2}{|q|} \mu \\
+               & \left<F_z\right> = \frac{q}{2} \frac{\partial B_z}{\partial z} \left(\mp \frac{2}{|q|}\mu\right)                                                                               \\
+               & \left<F_z\right> = -\mu \frac{\partial B_z}{\partial z} \leftarrow \text{\underline{dijamagnetska sila}}
+          \end{align*}
+          Do ponašanja magnetskog momenta u vremenu dolazimo polazeći od 2. Njutnovog zakona:
+          \begin{align*}
+               & m \frac{dv_z}{dt} = -\mu \frac{dB}{dz} = -\mu \frac{dB}{dt} \cdot \underbrace{\frac{dt}{dz}}_{\frac{1}{v_z}} \footnote{Član $\frac{dB}{dt}$ opisuje promenu magnetskog polja koje čestica \enquote{oseća}, polje samo po sebi je vremenski nepromenljivo, kao što je navedeno u postavci.} \\
+               & m v_z \frac{dv_z}{dt} = -\mu \frac{dB}{dt}                                                                                                                                                                                                                                                 \\
+               & \frac{d}{dt}\left(\frac{mv_z^2}{2}\right) = \frac{dE_\parallel}{dt} = -\mu \frac{dB}{dt}
+          \end{align*}
+          Iz zakona održanja energije dobijamo:
+          \begin{align*}
+               & \frac{dE}{dt} = 0                                                                      \\
+               & \frac{dE_\parallel}{dt} + \frac{dE_\perp}{dt} = 0                                      \\
+               & -\mu \frac{dB}{dt} + \frac{d}{dt} (\mu B) = 0                                          \\
+               & -\cancel{\mu \frac{dB}{dt}} + \frac{d\mu}{dt} B + \cancel{\mu \frac{dB}{dt}} = 0       \\
+               & \frac{d\mu}{dt} = 0 \implies \text{\underline{magnetski moment se ne menja u vremenu}}
+          \end{align*}
+
+          \hrulefill
+    \item Plazma sa izotropnom raspodelom brzina se nalazi u magnetskom ogledalu $R_0 = 4$ (koeficijent magnetskog ogledala).
+          Nema sudara, tako da čestice jednostavno beže, dok ostatak ostaje zarobljen.
+          Kolika je zarobljena frakcija?
+
+          \underline{Rešenje}:
+
+          Iz prethodnog zadatka nam je poznato da je $\mu = \frac{E_\perp}{B} = const$ i $E = E_\perp + E_\parallel = const$.
+
+          \noindent\hfill
+          \begin{tikzpicture}
+              \begin{axis}[
+                      axis lines=middle,
+                      xlabel={$z$},
+                      xmin=-3, xmax=3,
+                      ymin=-3, ymax=3,
+                      xtick={-2, 2},
+                      xticklabels={$a$, $b$},
+                      ytick=\empty,
+                      axis y line=none
+                  ]
+              \end{axis}
+          \end{tikzpicture}
+          \hfill\null\\
+          Posmatramo česticu koja se kreće iz tačke $a$ sa najslabijim poljem i dolazi do tačke $b$ sa najjačim poljem.
+          Da bi došlo do odbijanja, potrebno je da čestica izgubi svu paralelnu energiju dok dođe do tačke $b$, odnosno da ispunjava uslov:
+          \begin{align*}
+               & E_{\perp b} \ge E_b = E_a                                                      \\
+               & \mu = const \implies \frac{E_{\perp a}}{B_{min}} = \frac{E_{\perp b}}{B_{max}} \\
+               & E_{\perp b} = E_{\perp a} \frac{B_{max}}{B_{min}} \ge E_a                      \\
+               & \frac{E_a}{E_{\perp a}} \le \frac{B_{max}}{B_{min}} = R_0
+          \end{align*}
+          Ovaj uslov odbijanja po energijama možemo prevesti na brzine, zato što je dato da je njihova raspodela izotropna.
+          Onda možemo integracijom po prostornom uglu da zaključimo koji procenat brzina ga zadovoljava:
+          \[ \frac{E_a}{E_{\perp a} = \frac{v_a^2}{v_{\perp a}^2}} \le R_0 \implies \frac{v_a}{v_{\perp a}} \le \sqrt{R_0} \]
+          \hfill
+          \begin{tikzpicture}
+              \coordinate (O) at (0, 0);
+              \coordinate (P) at (3, 0);
+              \coordinate (V) at (3, 1);
+              \draw[->, thick, line cap=round] O--V node[above, pos=0.5] {$\vec v$};
+              \draw[->, thick, line cap=round] O--P node[below, pos=0.5] {$\vec v_\parallel$};
+              \draw[->, thick, line cap=round] P--V node[right, pos=0.5] {$\vec v_\perp$};
+              \pic[
+                  draw,
+                  angle radius=16mm,
+                  angle eccentricity=0.8,
+                  pic text={$\theta$}
+              ] {angle = P--O--V};
+          \end{tikzpicture}
+          \hfill\null\\
+          \begin{align*}
+               & \frac{v_a}{v_{\perp a}} = \frac{v_a}{v_a \sin\theta} = \frac{1}{\sin\theta} \le \sqrt{R_0}                                  \\
+               & \sin\theta \ge \frac{1}{\sqrt{R_0}}                                                                                         \\
+               & \theta \ge \arcsin\left(\frac{1}{\sqrt{R_0}}\right) = \theta_{gr} \rightarrow \text{ugao koji definiše tzv. konus gubitaka}
+          \end{align*}
+          \noindent\hfill
+          \begin{tikzpicture}[
+                  >=Stealth,
+              ]
+              \coordinate (O) at (0, 0);
+              \coordinate (P) at (2.5, 0);
+              \coordinate (V) at (2.5, 1);
+              \draw[->, thick, line cap=round] (-3,0)--(3,0) node[right] {$B$};
+              \draw (-2.5, -1)--(2.5, 1);
+              \draw (-2.5, 1)--(2.5, -1);
+              \draw (-2.5, 0) ellipse (0.2cm and 1cm);
+              \draw (2.5, 0) ellipse (0.2cm and 1cm);
+              \pic[
+                  draw,
+                  angle radius=16mm,
+                  angle eccentricity=0.8,
+                  pic text={$\theta_{gr}$}
+              ] {angle = P--O--V};
+          \end{tikzpicture}
+          \hfill\null\\
+          Procenat čestica koji pobegne ćemo naći kao odnos prostornog ugla koji im to omogućava i ukupnog prostornog ugla:
+          \begin{align*}
+               & \eta_\text{loss} = \frac{\Delta\Omega}{4\pi} \cdot 2 \quad \text{(množimo sa 2 jer imamo dva konusa)}                                                                                       \\
+               & d\Omega = \frac{dS}{r^2} = \frac{r^2 \sin\theta d\theta d\phi}{r^2} = \sin\theta d\theta d\phi                                                                                              \\
+               & \Delta \Omega = \int d\Omega = \int_{\phi = 0}^{2\pi} \int_{\theta = 0}{\theta_{gr}} \sin\theta d\theta d\phi = 2\pi \left.(-\cos\theta)\right|_0^{\theta_{gr}} = 2\pi(1 - \cos\theta_{gr}) \\
+               & \eta_\text{loss} = \frac{2\Delta\Omega}{4\pi} = 1 - \cos\theta_{gr}
+          \end{align*}
+          Konačno, frakciju zarobljenih čestica dobijamo kao:
+          \[ \eta_\text{trap} = 1 - \eta_\text{loss} = \cos\theta_{gr} = 0.86 = 86\% \]
+
+          \hrulefill
+    \item Poznata je $z$ komponenta magnetskog polja duž ose magnetskog ogledala: \[ B_z (z) = B_0 (1 + \alpha^2 z^2) \]
+          \begin{enumerate}
+              \item Ako u trenutku $t = 0$ na poziciji $z = 0$ elektron ima brzinu $v^2 = 3v_\parallel^2$, pri kojoj vrednosti $z_\text{refl}$ će on biti reflektovan?
+              \item Napisati jednačinu kretanja centra vođenja čestice za pravac koji je paralelan polju.
+              \item Pokazati da je kretanje sinusoidalno i izračunati njegovu frekvenciju.
+          \end{enumerate}
+
+          \underline{Rešenje}:
+
+          \begin{enumerate}
+              \item Poznati su zakoni održanja:
+                    \begin{align*}
+                         & \mu = \frac{E_\perp}{B_z} = \frac{mv_\perp^2}{2B_z} = const \implies \frac{v_\perp^2}{B_z} = const           \\
+                         & E = \frac{mv_\perp^2}{2} + \frac{mv_\parallel^2}{2} = const \implies v_\perp^2 + v_\parallel^2 = v^2 = const \\
+                    \end{align*}
+                    Dato je $v_{\parallel 0}$, pa prvo odredimo $v_{\perp 0}$:
+                    \[ v^2 = v_{\perp 0}^2 + v_{\parallel 0}^2 = v_{\perp 0}^2 + \frac{v^2}{3} \implies v_{\perp 0}^2 = \frac{2}{3} v^2 \]
+                    Sada možemo iskoristiti zakon o održanju magnetskog momenta, pri čemu imamo na umu da je u tački refleksije $v_{\parallel \text{refl}} = 0$:
+                    \begin{align*}
+                         & \frac{v_{\perp 0}^2}{B(0)} = \frac{v_{\perp \text{refl}^2}}{B(z_\text{refl})}                                   \\
+                         & \frac{\frac{2}{3}\cancel{v^2}}{\cancel{B_0}} = \frac{\cancel{v^2}}{\cancel{B_0} (1 + \alpha^2 z_\text{refl}^2)} \\
+                         & 1 + \alpha^2 z_\text{refl}^2 = \frac{3}{2}                                                                      \\
+                         & \alpha^2 z_\text{refl} = \frac{1}{2}                                                                            \\
+                         & z_\text{refl} = \frac{1}{\sqrt2 \alpha}
+                    \end{align*}
+              \item Na česticu deluje samo dijamagnetska sila $F_z$, pa je jednačina kretanja:
+                    \begin{align*}
+                         & m \frac{dv_z}{dt} = m \frac{d^2 z}{dt^2} = -\mu \frac{dB}{dz} = -\mu B_0 \alpha^2 2z \\
+                         & \frac{d^2 z}{dt^2} + \frac{2 \mu B_0 \alpha^2}{m} z = 0
+                    \end{align*}
+              \item Ako uvedemo oznaku $\Omega = \sqrt{\frac{2 \mu B_0 \alpha^2}{m}}$, opšte rešenje diferencijalne jednačine možemo zapisati kao:
+                    \[ z = A\sin(\Omega t) + B\cos(\Omega t) \]
+                    Nepoznate konstante $A$ i $B$ nalazimo iz početnih uslova:
+                    \begin{align*}
+                         & z(t = 0) = 0 \implies B = 0                                                                                                                                                                                                                                \\
+                         & \frac{dz}{dt}(t = 0) = v_z(t = 0) = v_{\parallel 0}                                                                                                                                                                                                        \\
+                         & v_z(t) = \frac{dz}{dt} = A\Omega\cos(\Omega t)                                                                                                                                                                                                             \\
+                         & v_{\parallel 0} = A\Omega                                                                                                                                                                                                                                  \\
+                         & \Omega^2 = \frac{2\mu B_0 \alpha^2}{m} = \frac{2 \frac{E_{\perp 0}}{\cancel{B_0}} \cancel{B_0} \alpha^2}{m} = \frac{\cancel 2 \frac{\cancel m v_{\perp 0}^2}{\cancel{2}} \alpha^2}{\cancel m} = v_{\perp 0}^2 \alpha^2 \implies \Omega = v_{\perp 0}\alpha \\
+                         & A = \frac{v_{\parallel 0}}{\Omega} = \frac{v_{\parallel 0}}{v_{\perp 0} \alpha} = \frac{\frac{\cancel{v}}{\cancel{\sqrt3}}}{\sqrt{\frac{2}{\cancel 3}} \cancel v \alpha} = \frac{1}{\sqrt 2 \alpha} = z_\text{refl}
+                    \end{align*}
+                    Dobili smo da je amplituda oscilovanja jednaka položaju tačke refleksije, što smo i očekivali.
+          \end{enumerate}
+\end{enumerate}
+
+\end{document}
