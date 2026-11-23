@@ -489,14 +489,14 @@
           Ovaj uslov odbijanja po energijama možemo prevesti na brzine, zato što je dato da je njihova raspodela izotropna.
           Onda možemo integracijom po prostornom uglu da zaključimo koji procenat brzina ga zadovoljava:
           \[ \frac{E_a}{E_{\perp a} = \frac{v_a^2}{v_{\perp a}^2}} \le R_0 \implies \frac{v_a}{v_{\perp a}} \le \sqrt{R_0} \]
-          \hfill
+          \noindent\hfill
           \begin{tikzpicture}
               \coordinate (O) at (0, 0);
               \coordinate (P) at (3, 0);
               \coordinate (V) at (3, 1);
-              \draw[->, thick, line cap=round] O--V node[above, pos=0.5] {$\vec v$};
-              \draw[->, thick, line cap=round] O--P node[below, pos=0.5] {$\vec v_\parallel$};
-              \draw[->, thick, line cap=round] P--V node[right, pos=0.5] {$\vec v_\perp$};
+              \draw[->, thick, line cap=round] (O)--(V) node[above, pos=0.5] {$\vec v$};
+              \draw[->, thick, line cap=round] (O)--(P) node[below, pos=0.5] {$\vec v_\parallel$};
+              \draw[->, thick, line cap=round] (P)--(V) node[right, pos=0.5] {$\vec v_\perp$};
               \pic[
                   draw,
                   angle radius=16mm,
